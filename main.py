@@ -18,6 +18,8 @@ try:
     from os import environ 
     from os import getcwd 
     from os import startfile 
+    from os import listdir
+    from os import remove
     import pyautogui as pag 
     from PIL import Image 
     from PIL import ImageDraw 
@@ -149,6 +151,7 @@ except Exception as e :
 print(style.GREEN + "[#] cards created...")
 
 # sending the certificated to the curresponding persons
+print(style.RED + "[#] DO NOT TOUCH THE KEYBOARD OR MOUSE UNTILL THE PROGRAM IS COMPLETLY EXCECUTED" + style.RESET)
 print(style.CYAN + "[#] opening Google chrome to send the cards to the recipients" + style.RESET)
 try:
 	options = Options()
@@ -173,7 +176,6 @@ except Exception as e:
 delay = 60
 menu = WebDriverWait(driver, delay).until(EC.element_to_be_clickable((By.XPATH, menu_xpath)))
 				
-
 # making splitscreen
 pag.hotkey('win','right')
 pag.moveTo(0,1078)
@@ -223,18 +225,18 @@ for idx, number in enumerate(numbers):
                     print(style.RED + f"\nFailed to send message to: {number}, retry ({i+1}/3)") 
                     print("Make sure your phone and computer is connected to the internet.") 
                     print("If there is an alert, please dismiss it." + style.RESET) 
-                    fail.append(number) 
+                    fail.append(number)
                 else:
 					#click_btn.click() 
                     sleep(1) 
                     sent=True 
                     sleep(3) 
                     print(style.GREEN + 'Message sent to: ' + number + " " + name_list[idx].title() + style.RESET) 
-                    pag.moveTo(322,0) 
-                    pag.click() 
-                    pag.keyDown("down") 
-                    pag.hotkey('ctrl','c')
-            
+                    
+        pag.moveTo(322,0) 
+        pag.click() 
+        pag.keyDown("down") 
+        pag.hotkey('ctrl','c')
     except Exception as e: 
         print(style.RED + 'Failed to send message to ' + number + str(e) + style.RESET) 
         fail.append(number)
@@ -242,9 +244,18 @@ for idx, number in enumerate(numbers):
         pag.click() 
         pag.keyDown("down") 
         pag.hotkey('ctrl','c')
+file = startfile(current_directory + "\\attendance_cards")
+pag.hotkey('alt','f4')
 print("Failed to send to : " + '\n' )
 for n in fail:
 	print(n)
+
+print(style.RED + "[#] cleaning certificates folder" + style.RESET)
+folder = current_directory + "\\attendance_cards\\"
+files = listdir(folder)
+for file in files:
+    print(style.WHITE + "[#]" + style.RED + " deleting " + style.CYAN + file + style.RESET)
+    remove(str(folder) + str(file))
+
 sleep(10)
 driver.close()
-file.close()
