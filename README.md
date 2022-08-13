@@ -16,3 +16,5 @@ python main.py
 ~~~
 after chrome opens login into **Whatsapp Web** and dont touch the mouse and keyboard after that
 after the program runs completely it will clear all the cards created and close the folder and whatsapp web
+
+![image](https://user-images.githubusercontent.com/67222042/184471055-8249160b-0183-45ce-af47-24c8308acec5.png)
